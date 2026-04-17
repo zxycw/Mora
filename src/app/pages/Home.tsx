@@ -16,9 +16,11 @@ export default function Home() {
 
         {/* Placeholder for Logo - will be added later */}
         <div className="flex justify-center my-8">
-          <div className="w-40 h-40 bg-gradient-to-br from-amber-100 to-orange-100 rounded-full flex items-center justify-center border-4 border-white shadow-xl">
-            <p className="text-gray-400 text-sm">MORA LOGO</p>
-          </div>
+          <img
+            src="/src/imports/MORA.png"
+            alt="MORA Logo"
+            className="w-40 h-40 object-contain drop-shadow-lg"
+          />
         </div>
 
         {/* Welcome Message */}
