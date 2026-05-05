@@ -20,5 +20,9 @@ export const router = createBrowserRouter([
   {
     path: "/recommendation",
     Component: Recommendation,
-  },
-]);
+    },
+  ],
+  {
+    basename: "/Mora",
+  }
+);
