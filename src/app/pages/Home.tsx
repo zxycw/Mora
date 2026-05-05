@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 import { Bot, Sparkles, Utensils } from "lucide-react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import moraLogo from "../../../imports/MORA.png";
+import moraLogo from "/imports/MORA.png";
 
 export default function Home() {
   const navigate = useNavigate();
