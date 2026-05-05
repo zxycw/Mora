@@ -1,6 +1,6 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { Home, ShoppingBag, Sparkles, Plus } from "lucide-react";
+import { Home, ShoppingBag, Sparkles, Check } from "lucide-react";
 import { getRecommendation } from "../utils/recommendationLogic";
 import { useCart } from "../context/CartContext";
 
@@ -17,25 +17,36 @@ export default function Recommendation() {
 
   const { mainDish, side, drink, dessert, message } = recommendation;
 
-  const formatPrice = (price: number) => `NT$${price.toLocaleString("zh-TW")}`;
+  // 勾選狀態，預設全勾選
+  const [selectedItems, setSelectedItems] = useState({
+    mainDish: true,
+    side: true,
+    drink: true,
+    dessert: true,
+  });
 
-  const totalPrice = 
-    mainDish.price + 
-    (side?.price || 0) + 
-    (drink?.price || 0) + 
-    (dessert?.price || 0);
-
-  const handleAddToCart = () => {
-    addToCart(mainDish, 1);
-    if (side) addToCart(side, 1);
-    if (drink) addToCart(drink, 1);
-    if (dessert) addToCart(dessert, 1);
-    
-    navigate("/general");
+  const toggleItem = (item: keyof typeof selectedItems) => {
+    setSelectedItems((prev) => ({
+      ...prev,
+      [item]: !prev[item],
+    }));
   };
 
-  const handleAddMainOnly = () => {
-    addToCart(mainDish, 1);
+  const formatPrice = (price: number) => `NT$${price.toLocaleString("zh-TW")}`;
+
+  // 計算被勾選項目的總價
+  const totalPrice =
+    (selectedItems.mainDish ? mainDish.price : 0) +
+    (selectedItems.side && side ? side.price : 0) +
+    (selectedItems.drink && drink ? drink.price : 0) +
+    (selectedItems.dessert && dessert ? dessert.price : 0);
+
+  const handleAddToCart = () => {
+    if (selectedItems.mainDish) addToCart(mainDish, 1);
+    if (selectedItems.side && side) addToCart(side, 1);
+    if (selectedItems.drink && drink) addToCart(drink, 1);
+    if (selectedItems.dessert && dessert) addToCart(dessert, 1);
+
     navigate("/general");
   };
 
@@ -77,14 +88,26 @@ export default function Recommendation() {
           </div>
 
           <div className="p-8 space-y-4">
-            <div className="space-y-2">
-              <h2 className="text-3xl font-bold text-gray-900">
-                {mainDish.name}
-              </h2>
-              <div className="flex items-center gap-2 text-amber-600">
-                <Sparkles className="w-5 h-5" />
-                <span className="font-medium">特別推薦</span>
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1 space-y-2">
+                <h2 className="text-3xl font-bold text-gray-900">
+                  {mainDish.name}
+                </h2>
+                <div className="flex items-center gap-2 text-amber-600">
+                  <Sparkles className="w-5 h-5" />
+                  <span className="font-medium">特別推薦</span>
+                </div>
               </div>
+              <button
+                onClick={() => toggleItem("mainDish")}
+                className={`flex-shrink-0 w-8 h-8 rounded-lg border-2 flex items-center justify-center transition-all ${
+                  selectedItems.mainDish
+                    ? "bg-gradient-to-r from-amber-400 to-orange-500 border-amber-500"
+                    : "bg-white border-gray-300"
+                }`}
+              >
+                {selectedItems.mainDish && <Check className="w-5 h-5 text-white" />}
+              </button>
             </div>
             <p className="text-gray-600 text-lg leading-relaxed">
               {mainDish.desc}
@@ -95,12 +118,22 @@ export default function Recommendation() {
         {/* Side Items Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           {side && (
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden relative">
               <img
                 src={side.img}
                 alt={side.name}
                 className="w-full h-32 object-cover"
               />
+              <button
+                onClick={() => toggleItem("side")}
+                className={`absolute top-2 right-2 w-7 h-7 rounded-lg border-2 flex items-center justify-center transition-all ${
+                  selectedItems.side
+                    ? "bg-gradient-to-r from-amber-400 to-orange-500 border-amber-500"
+                    : "bg-white border-gray-300"
+                }`}
+              >
+                {selectedItems.side && <Check className="w-4 h-4 text-white" />}
+              </button>
               <div className="p-4">
                 <p className="text-xs text-amber-600 font-medium mb-1">沙拉配菜</p>
                 <h3 className="font-bold text-gray-900 text-sm mb-1">{side.name}</h3>
@@ -110,12 +143,22 @@ export default function Recommendation() {
           )}
 
           {drink && (
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden relative">
               <img
                 src={drink.img}
                 alt={drink.name}
                 className="w-full h-32 object-cover"
               />
+              <button
+                onClick={() => toggleItem("drink")}
+                className={`absolute top-2 right-2 w-7 h-7 rounded-lg border-2 flex items-center justify-center transition-all ${
+                  selectedItems.drink
+                    ? "bg-gradient-to-r from-amber-400 to-orange-500 border-amber-500"
+                    : "bg-white border-gray-300"
+                }`}
+              >
+                {selectedItems.drink && <Check className="w-4 h-4 text-white" />}
+              </button>
               <div className="p-4">
                 <p className="text-xs text-amber-600 font-medium mb-1">推薦飲品</p>
                 <h3 className="font-bold text-gray-900 text-sm mb-1">{drink.name}</h3>
@@ -125,12 +168,22 @@ export default function Recommendation() {
           )}
 
           {dessert && (
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden relative">
               <img
                 src={dessert.img}
                 alt={dessert.name}
                 className="w-full h-32 object-cover"
               />
+              <button
+                onClick={() => toggleItem("dessert")}
+                className={`absolute top-2 right-2 w-7 h-7 rounded-lg border-2 flex items-center justify-center transition-all ${
+                  selectedItems.dessert
+                    ? "bg-gradient-to-r from-amber-400 to-orange-500 border-amber-500"
+                    : "bg-white border-gray-300"
+                }`}
+              >
+                {selectedItems.dessert && <Check className="w-4 h-4 text-white" />}
+              </button>
               <div className="p-4">
                 <p className="text-xs text-amber-600 font-medium mb-1">甜點</p>
                 <h3 className="font-bold text-gray-900 text-sm mb-1">{dessert.name}</h3>
@@ -143,7 +196,13 @@ export default function Recommendation() {
         {/* Your Preferences */}
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">您的選擇</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            {selections.gender && (
+              <div className="space-y-1">
+                <p className="text-sm text-gray-500">性別</p>
+                <p className="font-medium text-gray-900">{selections.gender}</p>
+              </div>
+            )}
             {selections.mood && (
               <div className="space-y-1">
                 <p className="text-sm text-gray-500">心情</p>
@@ -175,8 +234,8 @@ export default function Recommendation() {
         <div className="bg-gradient-to-r from-amber-100 to-orange-100 rounded-2xl p-6 mb-6 border border-amber-200">
           <div className="flex justify-between items-center">
             <div>
-              <p className="text-gray-600 mb-1">套餐總價</p>
-              <p className="text-sm text-gray-500">主餐 + 配菜 + 飲品 + 甜點</p>
+              <p className="text-gray-600 mb-1">已選項目總價</p>
+              <p className="text-sm text-gray-500">點擊項目右上角的勾選框來選擇</p>
             </div>
             <p className="text-4xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
               {formatPrice(totalPrice)}
@@ -195,25 +254,17 @@ export default function Recommendation() {
           </button>
 
           <button
-            onClick={handleAddMainOnly}
-            className="flex items-center justify-center gap-2 px-8 py-4 bg-white border-2 border-amber-400 text-amber-600 font-semibold rounded-2xl hover:bg-amber-50 transition-all"
-          >
-            <Plus className="w-5 h-5" />
-            只加主餐
-          </button>
-
-          <button
             onClick={handleAddToCart}
             className="flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-amber-400 to-orange-500 text-white font-semibold rounded-2xl hover:shadow-xl transition-all transform hover:scale-105"
           >
             <ShoppingBag className="w-5 h-5" />
-            加入完整套餐
+            加入購物車
           </button>
         </div>
 
         {/* Additional Info */}
         <p className="text-center text-gray-500 text-sm mt-8">
-          點擊「加入完整套餐」將所有推薦餐點加入購物車，或選擇「只加主餐」單獨添加主餐
+          勾選想要的餐點，點擊「加入購物車」將選擇的項目加入購物車
         </p>
       </div>
     </div>

@@ -2,9 +2,9 @@ export const MENU_DATA = [
   {
     id: "a1",
     name: "香煎鯛魚佐塔塔醬",
-    desc: "定食套餐：主食＋湯＋甜點＋飲品",
-    price: 560,
-    cat: "set",
+    desc: "ㅤ",
+    price: 280,
+    cat: "main",
     img: "https://i.ibb.co/ZRP89WRT/image.png"
   },
   {
@@ -12,7 +12,7 @@ export const MENU_DATA = [
     name: "檸檬香草烤鯖魚",
     desc: "主食＋湯＋甜點＋飲品",
     price: 270,
-    cat: "set",
+    cat: "main",
     img: "https://i.ibb.co/s9pZmBCh/image.png"
   },
   {
@@ -66,7 +66,7 @@ export const MENU_DATA = [
   {
     id: "s1",
     name: "和風梅醋秋蔬沙拉",
-    desc: "套餐價 +80",
+    desc: "ㅤ",
     price: 110,
     cat: "salad",
     img: "https://i.ibb.co/4nDHbfKJ/1dd81ada2853c006.png"
@@ -74,7 +74,7 @@ export const MENU_DATA = [
   {
     id: "s2",
     name: "奶油香草南瓜溫沙拉",
-    desc: "套餐價 +100",
+    desc: "ㅤ",
     price: 130,
     cat: "salad",
     img: "https://i.ibb.co/d0p35tWp/83255cfee7559222.png"
@@ -82,7 +82,7 @@ export const MENU_DATA = [
   {
     id: "d1",
     name: "焦糖烤布雷",
-    desc: "套餐價 +70",
+    desc: "ㅤ",
     price: 100,
     cat: "dessert",
     img: "https://i.ibb.co/tPWFx3VK/ea57d15500f922ec.png"
@@ -106,7 +106,7 @@ export const MENU_DATA = [
   {
     id: "d4",
     name: "檸檬塔",
-    desc: "套餐�� +60",
+    desc: "ㅤ",
     price: 90,
     cat: "dessert",
     img: "https://i.ibb.co/FqcVnL4S/A73-A1-D4-A-71-C1-4052-994-E-0-D87503-A8-C47.png"
@@ -114,7 +114,7 @@ export const MENU_DATA = [
   {
     id: "d5",
     name: "熱布朗尼佐香草冰淇淋",
-    desc: "套餐價 +90",
+    desc: "ㅤ",
     price: 120,
     cat: "dessert",
     img: "https://i.ibb.co/5WXfX5jt/94355-BF1-28-B5-4-C75-A4-E4-8-FBA5-EC9-C136.png"
@@ -122,7 +122,7 @@ export const MENU_DATA = [
   {
     id: "d7",
     name: "古早味紅茶",
-    desc: "套餐價 +40",
+    desc: "ㅤ",
     price: 60,
     cat: "drink",
     img: "https://i.ibb.co/TMN4b1xd/67-F1100-F-0-FB0-4240-8709-2-D49-C7-E20-D37.png"
@@ -130,7 +130,7 @@ export const MENU_DATA = [
   {
     id: "d8",
     name: "茉莉綠茶",
-    desc: "套餐價 +40",
+    desc: "ㅤ",
     price: 60,
     cat: "drink",
     img: "https://i.ibb.co/FLQbF2zD/20-B8-B8-AF-4-FAF-4-C66-A044-C6-B329-B44-F8-E.png"
@@ -162,7 +162,7 @@ export const MENU_DATA = [
   {
     id: "d12",
     name: "美��咖啡",
-    desc: "套餐價 +60",
+    desc: "ㅤ",
     price: 80,
     cat: "drink",
     img: "https://i.ibb.co/qLnGPcsv/89829f34-300c-4215-b24f-cc5bc4fc79f6.png"
@@ -186,7 +186,7 @@ export const MENU_DATA = [
   {
     id: "d15",
     name: "情緒特調",
-    desc: "套餐價 +80",
+    desc: "ㅤ",
     price: 100,
     cat: "drink",
     img: "https://i.ibb.co/svrQH7Xh/d600ffed-b73b-4ee4-8452-f4801471f169.png"
@@ -194,7 +194,7 @@ export const MENU_DATA = [
   {
     id: "d16",
     name: "南瓜濃湯",
-    desc: "套餐價 +50",
+    desc: "ㅤ",
     price: 70,
     cat: "soup",
     img: "https://i.ibb.co/VcjcxZQN/39266d76-1907-4026-b3de-8ad6372d6a9b.png"
@@ -202,7 +202,7 @@ export const MENU_DATA = [
   {
     id: "d17",
     name: "玉米濃湯",
-    desc: "套餐價 +50",
+    desc: "ㅤ",
     price: 70,
     cat: "soup",
     img: "https://i.ibb.co/Z6rH3qwZ/ba9a8c81-24b3-4cf2-b65b-0e587d58327c.png"
@@ -210,7 +210,7 @@ export const MENU_DATA = [
   {
     id: "d18",
     name: "蘑菇濃湯",
-    desc: "套餐價 +50",
+    desc: "ㅤ",
     price: 70,
     cat: "soup",
     img: "https://i.ibb.co/7NrnNyNB/ff3b1c8f-8474-465a-93b7-561cb8c51a1c.png"
@@ -282,7 +282,6 @@ export const MENU_DATA = [
 ];
 
 export const CATEGORIES = [
-  { id: 'set', name: '定食套餐' },
   { id: 'main', name: '單點主餐' },
   { id: 'appetizer', name: '前菜' },
   { id: 'salad', name: '沙拉' },

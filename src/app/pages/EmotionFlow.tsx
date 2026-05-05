@@ -2,9 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { ArrowLeft, ArrowRight, AlertCircle } from "lucide-react";
 
-type EmotionStep = "mood" | "taste" | "flavor" | "preferences";
+type EmotionStep = "gender" | "mood" | "taste" | "flavor" | "preferences";
 
 const STEPS: { step: EmotionStep; title: string; question: string }[] = [
+  { step: "gender", title: "心情點餐助手", question: "請選擇性別" },
   { step: "mood", title: "心情點餐助手", question: "今天的心情如何呢？" },
   { step: "taste", title: "心情點餐助手", question: "今天想吃什麼口味？" },
   { step: "flavor", title: "心情點餐助手", question: "想吃偏鹹還是偏甜？" },
@@ -12,6 +13,7 @@ const STEPS: { step: EmotionStep; title: string; question: string }[] = [
 ];
 
 const OPTIONS = {
+  gender: ["男性", "女性"],
   mood: ["很棒", "煩躁", "有點低落", "壓力大"],
   taste: ["清淡", "中等", "重口味"],
   flavor: ["偏鹹", "平衡", "偏甜"],
@@ -22,6 +24,7 @@ export default function EmotionFlow() {
   const navigate = useNavigate();
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [selections, setSelections] = useState<{
+    gender?: string;
     mood?: string;
     taste?: string;
     flavor?: string;

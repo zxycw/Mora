@@ -1,6 +1,7 @@
 import { MenuItem, MENU_DATA } from "../data/menuData";
 
 interface UserSelections {
+  gender?: string;
   mood?: string;
   taste?: string;
   flavor?: string;
@@ -16,11 +17,11 @@ interface RecommendationResult {
 }
 
 export function getRecommendation(selections: UserSelections): RecommendationResult {
-  const { mood, taste, flavor, preferences } = selections;
+  const { gender, mood, taste, flavor, preferences } = selections;
 
   // 根據忌口篩選可用的餐點
-  let availableMains = MENU_DATA.filter(item => 
-    item.cat === 'main' || item.cat === 'set'
+  let availableMains = MENU_DATA.filter(item =>
+    item.cat === 'main'
   );
 
   // 處理忌口選項
@@ -46,8 +47,17 @@ export function getRecommendation(selections: UserSelections): RecommendationRes
   // 根據心情選擇主餐
   if (mood === "很棒") {
     message = "今天心情不錯呢！為您推薦這道精緻主餐，搭配飯後甜點，讓美好的一天更加完美！";
-    
-    if (taste === "重口味") {
+
+    // 正向情緒：男性優先鹹口味，女性優先酸口味（檸檬、番茄）
+    if (gender === "男性") {
+      mainDish = availableMains.find(item =>
+        item.name.includes("香蒜") || item.name.includes("蒜香")
+      ) || availableMains[0];
+    } else if (gender === "女性") {
+      mainDish = availableMains.find(item =>
+        item.name.includes("檸檬") || item.name.includes("番茄")
+      ) || availableMains[0];
+    } else if (taste === "重口味") {
       mainDish = availableMains.find(item => item.name.includes("番茄雞腿排")) || availableMains[0];
     } else if (taste === "清淡") {
       mainDish = availableMains.find(item => item.name.includes("檸檬香草烤鯖魚")) || availableMains[0];
@@ -105,12 +115,17 @@ export function getRecommendation(selections: UserSelections): RecommendationRes
     drink = drinks.find(item => item.name.includes("咖啡拿鐵")) || drinks[0];
   }
 
-  // 選擇甜點
+  // 選擇甜點（負向情緒優先推薦甜點）
   const desserts = MENU_DATA.filter(item => item.cat === 'dessert');
   let dessert: MenuItem;
-  
-  if (mood === "有點低落" || mood === "壓力大") {
-    dessert = desserts.find(item => item.name.includes("熱布朗尼")) || desserts[0];
+
+  const isNegativeMood = mood === "煩躁" || mood === "有點低落" || mood === "壓力大";
+
+  if (isNegativeMood) {
+    // 負向情緒：推薦更甜的甜點
+    dessert = desserts.find(item =>
+      item.name.includes("熱布朗尼") || item.name.includes("巧克力") || item.name.includes("藍莓乳酪")
+    ) || desserts[0];
   } else if (flavor === "偏甜") {
     dessert = desserts.find(item => item.name.includes("藍莓乳酪蛋糕")) || desserts[0];
   } else {

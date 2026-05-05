@@ -10,12 +10,11 @@ export default function Home() {
       <div className="max-w-2xl w-full text-center space-y-8">
         {/* Logo & Brand */}
         <div className="space-y-4">
-          <h1 className="text-6xl font-bold text-gray-900">MORA</h1>
           <p className="text-xl text-gray-600">情緒點餐助手</p>
         </div>
 
-        {/* Placeholder for Logo - will be added later */}
-        <div className="flex justify-center my-8">
+        {/* MORA Logo */}
+        <div className="flex justify-center mb-8">
           <img
             src="/src/imports/MORA.png"
             alt="MORA Logo"
