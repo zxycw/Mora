@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router";
 import { Bot, Sparkles } from "lucide-react";
-import moraLogo from "../../../imports/MORA.png";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -16,7 +15,7 @@ export default function Home() {
         {/* MORA Logo */}
         <div className="flex justify-center mb-8">
           <img
-            src={moraLogo}
+            src="/Mora/MORA.png"
             alt="MORA Logo"
             className="w-40 h-40 object-contain drop-shadow-lg"
           />
